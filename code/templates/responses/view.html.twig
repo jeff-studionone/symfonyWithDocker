@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <h1 class="mb-3">
+        {% block title %}
+            Viewing comment by {{ comment.name }}
+        {% endblock title %}
+    </h1>
+    <a href="{{ path('comments.index') }}" class="btn btn-primary">Return to homepage</a>
+{% endblock header %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            {% include 'responses/_comment.html.twig' with {'response': comment} %}
+            <hr />
+
+            <div class="ml-4">
+                <h4 class="mb-3">{{ pagination.getTotalItemCount }}</h4>
+
+                {% for response in pagination %}
+                    {% include 'responses/_comment.html.twig' %}
+                {% endfor %}
+
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+                <hr />
+
+                <h4 class="mb-3">Reply to {{ comment.name }}</h4>
+
+                {% include 'responses/_form.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h1>Welcome! </h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pulvinar elit nec enim tristique, vitae scelerisque mi rhoncus. Etiam sollicitudin arcu at tortor malesuada pellentesque. Aliquam erat volutpat. Etiam rhoncus dui eu dapibus euismod. Nunc vitae ex erat. Duis ipsum nisl, egestas id varius nec, facilisis id nibh. Cras sed lobortis dolor. Morbi at est tempor, rhoncus enim interdum, posuere lectus. Aenean gravida interdum viverra.
+                </p>
+            </div>
+
+            <h4 class="mb-3">Recent Comments</h4>
+
+            {% for comment in pagination %}
+                {% include 'comments/_comment.html.twig' %}
+
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+
+            <hr />
+
+            <h4 class="mb-3">Add a comment</h4>
+            {% include 'comments/_form.html.twig' %}
+        </div>
+    </div>
+{% endblock body %}

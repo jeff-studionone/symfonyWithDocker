@@ -1,0 +1,5 @@
+code/vendor
+.env
+docker/local/mysql
+.idea
+code/var

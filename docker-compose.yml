@@ -1,0 +1,101 @@
+#version: '3.7'
+#
+#networks:
+#  developnet:
+#    external: true
+#    name: localdev
+#
+#services:
+#  php:
+#    build:
+#      context: .
+#    networks:
+#      - developnet
+#    restart: always
+#    container_name: comments_web
+#    environment:
+#      VIRTUAL_HOST: comments_web.docker
+#      MYSQL_HOST: comments-db
+#      MYSQL_USER:  admin
+#      MYSQL_PASSWORD: 123456
+#      MYSQL_DATABASE: symfony
+#      MYSQL_ROOT_PASSWORD: 123456
+#    volumes:
+#      - ./code:/var/www/html
+#    depends_on:
+#      - mysql
+#    env_file:
+#      - db.env
+#
+#  mysql:
+#    networks:
+#      - developnet
+#    image: mariadb:10
+#    restart: on-failure
+#    container_name: comments-db
+#    environment:
+#      MYSQL_HOST: comments-db
+#      MYSQL_USER:  admin
+#      MYSQL_PASSWORD: 123456
+#      MYSQL_DATABASE: symfony
+#      MYSQL_ROOT_PASSWORD: 123456
+#    volumes:
+#      - ./docker/local/mysql:/var/lib/mysql
+
+#  adminer:
+#    networks:
+#      - developnet
+#    image: adminer
+#    restart: on-failure
+#    container_name: comments-adminer
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - mysql
+
+
+version: '3.6'
+
+networks:
+  commentsnet:
+    external: true
+    name: localdev
+
+services:
+  php:
+    build:
+      context: .
+    networks:
+      - commentsnet
+    container_name: comments
+    restart: on-failure
+    environment:
+      VIRTUAL_HOST: comments.docker
+      DATABASE_URL: comments-db
+      MYSQL_HOST: comments-db
+      MYSQL_USER:  admin
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: 123456
+    env_file:
+      - db.env
+    volumes:
+      - ./code:/var/www/html
+      - ./docker/dev/php.ini:/usr/local/etc/php/php.ini-development
+      - ./docker/dev/apache.conf:/etc/apache2/sites-available/000-default.conf
+    depends_on:
+      - phpdb
+  phpdb:
+    image: mariadb:10
+    networks:
+      - commentsnet
+    container_name: comments-db
+    restart: on-failure
+    environment:
+      MYSQL_HOST: comments-db
+      MYSQL_USER:  admin
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: symfony
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+      - ./docker/local/mysql:/var/lib/mysql
