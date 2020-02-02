@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     sqlite3 \
     wget \
+    zip \
     && wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
 
 # INSTALLING COMPOSER

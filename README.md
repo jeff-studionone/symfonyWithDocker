@@ -18,28 +18,26 @@ This example requires that you have nginx or somthing similar to run it in you l
         $ cd symfonyWithDocker/
         $ docker-compose build && docker-compose up -d
     ```
+1. Create an `.env` file in your `code/.env` directory with the following variables, it is up to you if you change the config. 
+    ```$xslt
+        VIRTUAL_HOST=comments.docker
+        DATABASE_URL=comments-db
+        MYSQL_HOST=comments-db
+        MYSQL_USER=admin
+        MYSQL_PASSWORD=123456
+        MYSQL_DATABASE=symfony
+        MYSQL_ROOT_PASSWORD=123456
+    ```
 1. Connect into the container and run `composer`, the following command will install the vendors. 
     ```$xslt
         $ docker exec -it comments bash
-        $ composer install 
+        $ composer install
+        # Now you will need to run `Doctrine` to migrate the database
+        $ php bin/console doctrine:migrations:migrate
     ```
-1. Now you will need to run `Doctrine` to migrate the database. 
-```$xslt
-    $ docker exec -it comments-db bash
-    $ php bin/console doctrine:migrations:migrate
-```
+1. Add the virtual host into you `/etc/hosts` file `127.0.0.1  comments.docker`
 1. Save the virtual host `comments.docker` into your `/etc/hosts`
 1. Now open your browser and go to [comments.docker](http://comments.docker/)
-1. Create an `.env` file in your root directory with the following variables, it is up to you if you change the config. 
-    ```$xslt
-        VIRTUAL_HOST= comments.docker
-        DATABASE_URL= comments-db
-        MYSQL_HOST= comments-db
-        MYSQL_USER=  admin
-        MYSQL_PASSWORD= 123456
-        MYSQL_DATABASE= symfony
-        MYSQL_ROOT_PASSWORD= 123456
-    ```
 1. Perhaps you are going to have a problem with permissions and this is because the container is running with super user and it create the folder `docker/local/mysql`, so please change the permission of this folder if you have any problem and that will work fine again. 
 
 
