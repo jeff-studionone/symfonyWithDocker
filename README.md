@@ -36,7 +36,6 @@ This example requires that you have nginx or somthing similar to run it in you l
         $ php bin/console doctrine:migrations:migrate
     ```
 1. Add the virtual host into you `/etc/hosts` file `127.0.0.1  comments.docker`
-1. Save the virtual host `comments.docker` into your `/etc/hosts`
 1. Now open your browser and go to [comments.docker](http://comments.docker/)
 1. Perhaps you are going to have a problem with permissions and this is because the container is running with super user and it create the folder `docker/local/mysql`, so please change the permission of this folder if you have any problem and that will work fine again. 
 
