@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CommentsController extends AbstractController
 {
-    const PAGINATION_LIMIT = 2;
+    const PAGINATION_LIMIT = 10;
 
     /**
      * @Route("/", name="comments.index", methods={"GET","POST"})
