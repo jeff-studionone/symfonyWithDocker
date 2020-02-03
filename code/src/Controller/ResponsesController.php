@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ResponsesController extends AbstractController
 {
-    const PAGINATION_LIMIT = 2;
+    const PAGINATION_LIMIT = 10;
 
     /**
      * @Route("/{id}/view", name="responses.view", methods={"GET", "POST"})
